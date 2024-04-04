@@ -13,5 +13,5 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = "SpaceInvaders.Main"
+    mainClass = "SpaceInvaders.SpaceInvadersGame"
 }
