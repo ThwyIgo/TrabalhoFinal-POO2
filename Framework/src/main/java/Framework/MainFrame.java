@@ -8,7 +8,6 @@ public abstract class MainFrame extends JFrame  {
     protected abstract AbstractBoard createBoard();
     
     public MainFrame(String t) {
-          
         add(createBoard());
 		
 		setTitle(t);
@@ -19,14 +18,4 @@ public abstract class MainFrame extends JFrame  {
 		setLocationRelativeTo(null);
 		setVisible(true);
     }
-
-
-//    public static void main(String[] args) {
-//
-//        EventQueue.invokeLater(() -> {
-//
-//            MainFrameExtended ex = new MainFrameExtended();
-//        });
-//    }
-    
 }

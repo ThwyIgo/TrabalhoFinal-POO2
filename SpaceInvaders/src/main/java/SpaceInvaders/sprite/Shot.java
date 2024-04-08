@@ -1,11 +1,9 @@
 package SpaceInvaders.sprite;
 
-import javax.swing.ImageIcon;
-
 import Framework.sprite.BadSprite;
 
+import javax.swing.*;
 import java.net.URL;
-
 
 public class Shot extends BadSprite {
 
@@ -13,12 +11,10 @@ public class Shot extends BadSprite {
     }
 
     public Shot(int x, int y) {
-
         initShot(x, y);
     }
 
     private void initShot(int x, int y) {
-
         URL shotImg = this.getClass().getResource("/images/shot.png");
         assert shotImg != null;
         ImageIcon ii = new ImageIcon(shotImg);

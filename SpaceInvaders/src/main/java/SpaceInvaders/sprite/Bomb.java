@@ -1,22 +1,18 @@
 package SpaceInvaders.sprite;
 
-import javax.swing.ImageIcon;
-
 import Framework.sprite.BadSprite;
 
+import javax.swing.*;
 import java.net.URL;
 
 public class Bomb extends BadSprite {
-
     private boolean destroyed;
 
     public Bomb(int x, int y) {
-
         initBomb(x, y);
     }
 
     private void initBomb(int x, int y) {
-
         setDestroyed(true);
 
         this.x = x;
@@ -28,15 +24,12 @@ public class Bomb extends BadSprite {
         setImage(ii.getImage());
     }
 
-    public void setDestroyed(boolean destroyed) {
-
-        this.destroyed = destroyed;
-    }
-
+    @Override
     public boolean isDestroyed() {
-
         return destroyed;
     }
-    
-    
+
+    public void setDestroyed(boolean destroyed) {
+        this.destroyed = destroyed;
+    }
 }

@@ -1,7 +1,6 @@
 package SpaceInvaders;
 
 public interface Commons extends Framework.Commons {
-
     int BOMB_HEIGHT = 5;
 
     int ALIEN_HEIGHT = 12;
