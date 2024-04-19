@@ -10,12 +10,17 @@ import java.util.concurrent.ThreadLocalRandom;
 public class MonsterSprite extends BadSprite {
     protected static final int numOfImages = 9;
     protected static final URL[][] monsterImages = new URL[2][numOfImages];
+
     static {
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < numOfImages; i++) {
             monsterImages[0][i] = MonsterSprite.class.getResource("/images/monster" + (i + 1) + ".png");
             monsterImages[1][i] = MonsterSprite.class.getResource("/images/monster" + (i + 1) + "bg.png");
         }
     }
+
+    protected int speedX = 0;
+    protected int speedY = 0;
+    protected int counter = 0;
 
     // Cria um monstro com uma imagem aleatória e posiciona-o
     public MonsterSprite(int x, int y) {
@@ -25,5 +30,31 @@ public class MonsterSprite extends BadSprite {
         int idx = ThreadLocalRandom.current().nextInt(numOfImages);
         setImage(new ImageIcon(monsterImages[0][idx]).getImage()
                 .getScaledInstance(Commons.MONSTER_WIDTH, Commons.MONSTER_HEIGHT, Image.SCALE_SMOOTH));
+        imageWidth = Commons.MONSTER_WIDTH;
+        imageHeight = Commons.MONSTER_HEIGHT;
+    }
+
+    public int getSpeedX() {
+        return speedX;
+    }
+
+    public void setSpeedX(int speedX) {
+        this.speedX = speedX;
+    }
+
+    public int getSpeedY() {
+        return speedY;
+    }
+
+    public void setSpeedY(int speedY) {
+        this.speedY = speedY;
+    }
+
+    public int getCounter() {
+        return counter;
+    }
+
+    public void setCounter(int counter) {
+        this.counter = counter;
     }
 }

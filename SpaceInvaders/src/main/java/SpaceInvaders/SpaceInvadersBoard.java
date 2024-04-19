@@ -83,6 +83,13 @@ public class SpaceInvadersBoard extends AbstractBoard {
 //    }
 
     @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.setColor(Color.green);
+        g.drawLine(0, Commons.GROUND, Commons.BOARD_WIDTH, Commons.GROUND);
+    }
+
+    @Override
     protected void update() {
         if (deaths == Commons.NUMBER_OF_ALIENS_TO_DESTROY) {
             inGame = false;

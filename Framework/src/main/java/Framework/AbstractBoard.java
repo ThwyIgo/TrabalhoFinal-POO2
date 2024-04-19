@@ -119,12 +119,12 @@ public abstract class AbstractBoard extends JPanel {
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-        g.setColor(Color.black);
-        g.fillRect(0, 0, d.width, d.height);
-        g.setColor(Color.green);
+//        g.setColor(Color.black);
+//        g.fillRect(0, 0, d.width, d.height);
+//        g.setColor(Color.green);
 
         if (inGame) {
-            g.drawLine(0, Commons.GROUND, Commons.BOARD_WIDTH, Commons.GROUND);
+//            g.drawLine(0, Commons.GROUND, Commons.BOARD_WIDTH, Commons.GROUND);
 
             drawBadSprites(g);
             drawPlayers(g);
