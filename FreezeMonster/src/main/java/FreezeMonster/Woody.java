@@ -25,19 +25,19 @@ public class Woody extends Player {
 
         switch (key){
             case KeyEvent.VK_LEFT -> {
-                dx = -5;
+                dx = -Commons.MAX_SPEED() - 2;
                 dir = Dir.LEFT;
             }
             case KeyEvent.VK_RIGHT -> {
-                dx = 5;
+                dx = Commons.MAX_SPEED() + 2;
                 dir = Dir.RIGHT;
             }
             case KeyEvent.VK_UP -> {
-                dy = -5;
+                dy = -Commons.MAX_SPEED() - 2;
                 dir = Dir.UP;
             }
             case KeyEvent.VK_DOWN -> {
-                dy = 5;
+                dy = Commons.MAX_SPEED() + 2;
                 dir = Dir.DOWN;
             }
         }

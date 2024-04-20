@@ -3,14 +3,13 @@ package Framework.sprite;
 import java.util.LinkedList;
 
 public class BadnessBoxSprite  extends BadSprite {
-     LinkedList<BadSprite>  badnesses = new LinkedList<>();
+     LinkedList<BadSprite> badnesses = new LinkedList<>();
      
      void add(BadSprite b) {
     	 badnesses.add(b);
      }
      
-     public LinkedList<BadSprite>  getBadnesses() {
+     public LinkedList<BadSprite> getBadnesses() {
     	 return badnesses;
      }
-     
 }

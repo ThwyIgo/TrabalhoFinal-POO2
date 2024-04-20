@@ -4,18 +4,15 @@ import Framework.AbstractBoard;
 import Framework.sprite.BadSprite;
 import Framework.sprite.Player;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.net.URL;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class FreezeMonsterBoard extends AbstractBoard {
+    // define global control vars
+    private final int direction = -1;
     //define sprites
     private Shot shot;
-    // define global control vars
-    private int direction = -1;
     private int deaths = 0;
 
     public FreezeMonsterBoard() {
@@ -94,18 +91,14 @@ public class FreezeMonsterBoard extends AbstractBoard {
 
             int y = shot.getY();
             int x = shot.getX();
-            switch(shot.dir){
-                case UP ->
-                    shot.setY(y-8);
-                case DOWN ->
-                    shot.setY(y+8);
-                case RIGHT ->
-                    shot.setX(x+8);
-                case LEFT ->
-                    shot.setX(x-8);
+            switch (shot.dir) {
+                case UP -> shot.setY(y - Commons.PROJECTILE_SPEED());
+                case DOWN -> shot.setY(y + Commons.PROJECTILE_SPEED());
+                case RIGHT -> shot.setX(x + Commons.PROJECTILE_SPEED());
+                case LEFT -> shot.setX(x - Commons.PROJECTILE_SPEED());
             }
 
-            if (y < 0 || y>Commons.BOARD_HEIGHT() || x < 0 || x>Commons.BOARD_WIDTH()) {
+            if (y < 0 || y > Commons.BOARD_HEIGHT() || x < 0 || x > Commons.BOARD_WIDTH()) {
                 shot.die();
             }
         }
@@ -113,36 +106,65 @@ public class FreezeMonsterBoard extends AbstractBoard {
         for (BadSprite badSprite : badSprites) {
             switch (badSprite) {
                 case MonsterSprite monsterSprite -> {
-                    if(monsterSprite.isDying()) break;
-                    var counter = monsterSprite.getCounter();
-                    if (counter == 0) {
-                        int speedX = ThreadLocalRandom.current().nextInt(-Commons.MAX_SPEED(), Commons.MAX_SPEED());
-                        int speedY = ThreadLocalRandom.current().nextInt(-Commons.MAX_SPEED(), Commons.MAX_SPEED());
-                        monsterSprite.setSpeedX(speedX);
-                        monsterSprite.setSpeedY(speedY);
-                        monsterSprite.setCounter(ThreadLocalRandom.current().nextInt(300));
+                    if (!monsterSprite.isDying()) {
+                        var counter = monsterSprite.getCounter();
+                        if (counter == 0) {
+                            int speedX = ThreadLocalRandom.current().nextInt(-Commons.MAX_SPEED(), Commons.MAX_SPEED());
+                            int speedY = ThreadLocalRandom.current().nextInt(-Commons.MAX_SPEED(), Commons.MAX_SPEED());
+                            monsterSprite.setSpeedX(speedX);
+                            monsterSprite.setSpeedY(speedY);
+                            monsterSprite.setCounter(ThreadLocalRandom.current().nextInt(300));
+                        }
+
+                        // Aterar a direção do monstro para que ele não vá para fora da tela
+                        if (monsterSprite.getX() + monsterSprite.getImageWidth() > Commons.BOARD_WIDTH()
+                                && monsterSprite.getSpeedX() > 0)
+                            monsterSprite.setSpeedX(-monsterSprite.getSpeedX());
+
+                        if (monsterSprite.getX() < 0
+                                && monsterSprite.getSpeedX() < 0)
+                            monsterSprite.setSpeedX(-monsterSprite.getSpeedX());
+
+                        if (monsterSprite.getY() + monsterSprite.getImageHeight() > Commons.BOARD_HEIGHT()
+                                && monsterSprite.getSpeedY() > 0)
+                            monsterSprite.setSpeedY(-monsterSprite.getSpeedY());
+
+                        if (monsterSprite.getY() < 0
+                                && monsterSprite.getSpeedY() < 0)
+                            monsterSprite.setSpeedY(-monsterSprite.getSpeedY());
+
+                        monsterSprite.setCounter(monsterSprite.getCounter() - 1);
+                        monsterSprite.moveX(monsterSprite.getSpeedX());
+                        monsterSprite.moveY(monsterSprite.getSpeedY());
                     }
+                    // Processar gosmas
+                    for (var foo : monsterSprite.getBadnesses()) {
+                        Gosma gosma = (Gosma) foo;
 
-                    // Aterar a direção do monstro para que ele não vá para fora da tela
-                    if (monsterSprite.getX() + monsterSprite.getImageWidth() > Commons.BOARD_WIDTH()
-                            && monsterSprite.getSpeedX() > 0)
-                        monsterSprite.setSpeedX(-monsterSprite.getSpeedX());
+                        if (gosma.isDestroyed() && !monsterSprite.isDying())
+                            gosma.counter--;
 
-                    if (monsterSprite.getX() < 0
-                            && monsterSprite.getSpeedX() < 0)
-                        monsterSprite.setSpeedX(-monsterSprite.getSpeedX());
+                        if (gosma.counter == 0) {
+                            gosma.counter = ThreadLocalRandom.current().nextInt(300);
+                            gosma.setX(monsterSprite.getX());
+                            gosma.setY(monsterSprite.getY());
+                            gosma.randomDir();
+                            gosma.setDestroyed(false);
+                            continue;
+                        }
 
-                    if (monsterSprite.getY() + monsterSprite.getImageHeight() > Commons.BOARD_HEIGHT()
-                            && monsterSprite.getSpeedY() > 0)
-                        monsterSprite.setSpeedY(-monsterSprite.getSpeedY());
+                        if (gosma.getX() < 0 || gosma.getX() > Commons.BOARD_WIDTH()
+                                || gosma.getY() < 0 || gosma.getY() > Commons.BOARD_HEIGHT()) {
+                            gosma.setDestroyed(true);
+                        }
 
-                    if (monsterSprite.getY() < 0
-                            && monsterSprite.getSpeedY() < 0)
-                        monsterSprite.setSpeedY(-monsterSprite.getSpeedY());
-
-                    monsterSprite.setCounter(monsterSprite.getCounter() - 1);
-                    monsterSprite.moveX(monsterSprite.getSpeedX());
-                    monsterSprite.moveY(monsterSprite.getSpeedY());
+                        switch (gosma.dir) {
+                            case UP -> gosma.moveY(-Commons.PROJECTILE_SPEED());
+                            case DOWN -> gosma.moveY(Commons.PROJECTILE_SPEED());
+                            case LEFT -> gosma.moveX(-Commons.PROJECTILE_SPEED());
+                            case RIGHT -> gosma.moveX(Commons.PROJECTILE_SPEED());
+                        }
+                    }
                 }
                 default -> throw new IllegalStateException("Unexpected value: " + badSprite);
             }
@@ -159,7 +181,7 @@ public class FreezeMonsterBoard extends AbstractBoard {
         if (key == KeyEvent.VK_SPACE) {
             if (inGame) {
                 if (!shot.isVisible()) {
-                    shot = new Shot(x, y,((Woody)player).dir);
+                    shot = new Shot(x, y, ((Woody) player).dir);
                 }
             }
         }

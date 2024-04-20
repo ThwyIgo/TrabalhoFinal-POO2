@@ -3,16 +3,19 @@ package FreezeMonster;
 public class Commons extends Framework.Commons {
     protected int MONSTER_WIDTH = 80;
     protected int MONSTER_HEIGHT = 80;
-    protected int MAX_SPEED = 5;
-
+    protected int MAX_SPEED = 2;
+    protected int PROJECTILE_SPEED = 6;
+    protected int PROJECTILE_SIZE = 30;
     protected int PLAYER_WIDTH = 100;
     protected int PLAYER_HEIGHT = 50;
-
     protected int NUMBER_OF_MONSTERS_TO_DESTROY = 24;
-
     protected Commons() {
         BOARD_WIDTH = 1280;
         BOARD_HEIGHT = 720;
+    }
+
+    public static int PROJECTILE_SPEED() {
+        return ensureInstance().PROJECTILE_SPEED;
     }
 
     // Garante que a instância seja do tipo FreezeMonster.Commons
@@ -46,5 +49,9 @@ public class Commons extends Framework.Commons {
 
     public static int PLAYER_HEIGHT() {
         return ensureInstance().PLAYER_HEIGHT;
+    }
+
+    public static int PROJECTILE_SIZE() {
+        return ensureInstance().PROJECTILE_SIZE;
     }
 }
