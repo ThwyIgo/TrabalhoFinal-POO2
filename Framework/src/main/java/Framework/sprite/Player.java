@@ -7,7 +7,7 @@ import java.awt.event.KeyEvent;
 import java.util.Objects;
 
 public class Player extends Sprite {
-    private int width;
+    protected int width;
 
     public Player() {
         loadImage();

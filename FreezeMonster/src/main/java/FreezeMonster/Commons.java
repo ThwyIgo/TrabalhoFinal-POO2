@@ -5,6 +5,11 @@ public class Commons extends Framework.Commons {
     protected int MONSTER_HEIGHT = 80;
     protected int MAX_SPEED = 5;
 
+    protected int PLAYER_WIDTH = 100;
+    protected int PLAYER_HEIGHT = 50;
+
+    protected int NUMBER_OF_MONSTERS_TO_DESTROY = 24;
+
     protected Commons() {
         BOARD_WIDTH = 1280;
         BOARD_HEIGHT = 720;
@@ -29,5 +34,17 @@ public class Commons extends Framework.Commons {
 
     public static int MAX_SPEED() {
         return ensureInstance().MAX_SPEED;
+    }
+
+    public static int NUMBER_OF_MONSTERS_TO_DESTROY() {
+        return ensureInstance().NUMBER_OF_MONSTERS_TO_DESTROY;
+    }
+
+    public static int PLAYER_WIDTH() {
+        return ensureInstance().PLAYER_WIDTH;
+    }
+
+    public static int PLAYER_HEIGHT() {
+        return ensureInstance().PLAYER_HEIGHT;
     }
 }

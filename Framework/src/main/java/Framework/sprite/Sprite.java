@@ -9,6 +9,7 @@ public class Sprite {
     protected int imageWidth;
     protected int imageHeight;
     protected int dx;
+
     private boolean visible;
     private boolean dying;
 

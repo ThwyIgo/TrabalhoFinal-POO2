@@ -4,14 +4,28 @@ import Framework.AbstractBoard;
 import Framework.sprite.BadSprite;
 import Framework.sprite.Player;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.net.URL;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class FreezeMonsterBoard extends AbstractBoard {
+    //define sprites
+    private Shot shot;
+    // define global control vars
+    private int direction = -1;
+    private int deaths = 0;
+
     public FreezeMonsterBoard() {
         super();
         setBackground(new Color(100, 200, 100));
+    }
+
+    @Override
+    protected Player createPlayer() {
+        return new Woody();
     }
 
     @Override
@@ -26,16 +40,68 @@ public class FreezeMonsterBoard extends AbstractBoard {
 
     @Override
     protected void createOtherSprites() {
+        shot = new Shot();
+    }
 
+    private void drawShot(Graphics g) {
+        if (shot.isVisible()) {
+            g.drawImage(shot.getImage(), shot.getX(), shot.getY(), this);
+        }
     }
 
     @Override
     protected void drawOtherSprites(Graphics g) {
-
+        drawShot(g);
     }
 
     @Override
     protected void update() {
+        if (deaths == Commons.NUMBER_OF_MONSTERS_TO_DESTROY()) {
+            inGame = false;
+            timer.stop();
+            message = "Game won!";
+        }
+
+        // player
+        for (Player player : players)
+            player.act();
+
+        // shot
+        if (shot.isVisible()) {
+            int shotX = shot.getX();
+            int shotY = shot.getY();
+
+            for (BadSprite badSprite : badSprites) {
+                switch (badSprite) {
+                    case MonsterSprite monstersprite -> {
+                        int monsterX = badSprite.getX();
+                        int monsterY = badSprite.getY();
+
+                        if (monstersprite.isVisible() && shot.isVisible()) {
+                            if (shotX >= (monsterX) && shotX <= (monsterX + Commons.MONSTER_WIDTH()) && shotY >= (monsterY) && shotY <= (monsterY + Commons.MONSTER_HEIGHT())) {
+
+                                //ImageIcon ii = new ImageIcon(explImg);
+                                //monstersprite.setImage(ii.getImage());
+                                monstersprite.setDying(true);
+                                deaths++;
+                                shot.die();
+                            }
+                        }
+                    }
+                    default -> throw new IllegalStateException("Unexpected value: " + badSprite);
+                }
+            }
+
+            int y = shot.getY();
+            y -= 4;
+
+            if (y < 0) {
+                shot.die();
+            } else {
+                shot.setY(y);
+            }
+        }
+
         for (BadSprite badSprite : badSprites) {
             switch (badSprite) {
                 case MonsterSprite monsterSprite -> {
@@ -76,6 +142,17 @@ public class FreezeMonsterBoard extends AbstractBoard {
 
     @Override
     protected void processOtherSprites(Player player, KeyEvent e) {
+        int x = player.getX();
+        int y = player.getY();
 
+        int key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_SPACE) {
+            if (inGame) {
+                if (!shot.isVisible()) {
+                    shot = new Shot(x, y);
+                }
+            }
+        }
     }
 }
