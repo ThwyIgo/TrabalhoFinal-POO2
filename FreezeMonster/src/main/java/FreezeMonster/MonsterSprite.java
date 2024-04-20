@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class MonsterSprite extends BadSprite {
+    protected int imgIdx;
     protected static final int numOfImages = 9;
     protected static final URL[][] monsterImages = new URL[2][numOfImages];
 
@@ -27,13 +28,21 @@ public class MonsterSprite extends BadSprite {
         this.x = x;
         this.y = y;
 
-        int idx = ThreadLocalRandom.current().nextInt(numOfImages);
-        setImage(new ImageIcon(monsterImages[0][idx]).getImage()
+        imgIdx = ThreadLocalRandom.current().nextInt(numOfImages);
+        setImage(new ImageIcon(monsterImages[0][imgIdx]).getImage()
                 .getScaledInstance(Commons.MONSTER_WIDTH(), Commons.MONSTER_HEIGHT(), Image.SCALE_SMOOTH));
         imageWidth = Commons.MONSTER_WIDTH();
         imageHeight = Commons.MONSTER_HEIGHT();
     }
 
+    public void die() {
+        visible = true;
+    }
+
+    public void setDying(boolean dying) {
+        this.dying = dying;
+        setImage(new ImageIcon(monsterImages[1][imgIdx]).getImage().getScaledInstance(Commons.MONSTER_WIDTH(), Commons.MONSTER_HEIGHT(), Image.SCALE_SMOOTH));
+    }
     public int getSpeedX() {
         return speedX;
     }

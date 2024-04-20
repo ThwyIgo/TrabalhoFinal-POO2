@@ -9,6 +9,9 @@ import java.util.Objects;
 
 public class Woody extends Player {
     protected int dy;
+    protected enum Dir {UP,DOWN,RIGHT,LEFT}
+
+    public Dir dir = Dir.UP;
     protected int height = Commons.PLAYER_HEIGHT();
 
     protected void loadImage() {
@@ -23,15 +26,19 @@ public class Woody extends Player {
         switch (key){
             case KeyEvent.VK_LEFT -> {
                 dx = -5;
+                dir = Dir.LEFT;
             }
             case KeyEvent.VK_RIGHT -> {
                 dx = 5;
+                dir = Dir.RIGHT;
             }
             case KeyEvent.VK_UP -> {
                 dy = -5;
+                dir = Dir.UP;
             }
             case KeyEvent.VK_DOWN -> {
                 dy = 5;
+                dir = Dir.DOWN;
             }
         }
     }

@@ -10,8 +10,8 @@ public class Sprite {
     protected int imageHeight;
     protected int dx;
 
-    private boolean visible;
-    private boolean dying;
+    protected boolean visible;
+    protected boolean dying;
 
     public Sprite() {
         visible = true;

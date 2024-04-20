@@ -93,18 +93,27 @@ public class FreezeMonsterBoard extends AbstractBoard {
             }
 
             int y = shot.getY();
-            y -= 4;
+            int x = shot.getX();
+            switch(shot.dir){
+                case UP ->
+                    shot.setY(y-8);
+                case DOWN ->
+                    shot.setY(y+8);
+                case RIGHT ->
+                    shot.setX(x+8);
+                case LEFT ->
+                    shot.setX(x-8);
+            }
 
-            if (y < 0) {
+            if (y < 0 || y>Commons.BOARD_HEIGHT() || x < 0 || x>Commons.BOARD_WIDTH()) {
                 shot.die();
-            } else {
-                shot.setY(y);
             }
         }
 
         for (BadSprite badSprite : badSprites) {
             switch (badSprite) {
                 case MonsterSprite monsterSprite -> {
+                    if(monsterSprite.isDying()) break;
                     var counter = monsterSprite.getCounter();
                     if (counter == 0) {
                         int speedX = ThreadLocalRandom.current().nextInt(-Commons.MAX_SPEED(), Commons.MAX_SPEED());
@@ -150,7 +159,7 @@ public class FreezeMonsterBoard extends AbstractBoard {
         if (key == KeyEvent.VK_SPACE) {
             if (inGame) {
                 if (!shot.isVisible()) {
-                    shot = new Shot(x, y);
+                    shot = new Shot(x, y,((Woody)player).dir);
                 }
             }
         }
