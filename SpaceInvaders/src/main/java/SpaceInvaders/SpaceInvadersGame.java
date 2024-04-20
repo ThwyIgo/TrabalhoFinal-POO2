@@ -18,7 +18,7 @@ public class SpaceInvadersGame extends MainFrame {
 
 
 	public static void main(String[] args) {
-
+		Commons.ensureInstance();
 		EventQueue.invokeLater(SpaceInvadersGame::new);
 	}
 

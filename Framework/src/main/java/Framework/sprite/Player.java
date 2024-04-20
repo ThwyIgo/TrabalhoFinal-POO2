@@ -28,8 +28,8 @@ public class Player extends Sprite {
             x = 2;
         }
 
-        if (x >= Commons.BOARD_WIDTH - 2 * width) {
-            x = Commons.BOARD_WIDTH - 2 * width;
+        if (x >= Commons.BOARD_WIDTH() - 2 * width) {
+            x = Commons.BOARD_WIDTH() - 2 * width;
         }
     }
 
@@ -58,7 +58,7 @@ public class Player extends Sprite {
     }
 
     private void resetState() {
-        setX(Commons.INIT_PLAYER_X);
-        setY(Commons.INIT_PLAYER_Y);
+        setX(Commons.INIT_PLAYER_X());
+        setY(Commons.INIT_PLAYER_Y());
     }
 }

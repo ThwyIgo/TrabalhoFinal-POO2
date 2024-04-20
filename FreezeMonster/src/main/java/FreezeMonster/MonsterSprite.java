@@ -29,9 +29,9 @@ public class MonsterSprite extends BadSprite {
 
         int idx = ThreadLocalRandom.current().nextInt(numOfImages);
         setImage(new ImageIcon(monsterImages[0][idx]).getImage()
-                .getScaledInstance(Commons.MONSTER_WIDTH, Commons.MONSTER_HEIGHT, Image.SCALE_SMOOTH));
-        imageWidth = Commons.MONSTER_WIDTH;
-        imageHeight = Commons.MONSTER_HEIGHT;
+                .getScaledInstance(Commons.MONSTER_WIDTH(), Commons.MONSTER_HEIGHT(), Image.SCALE_SMOOTH));
+        imageWidth = Commons.MONSTER_WIDTH();
+        imageHeight = Commons.MONSTER_HEIGHT();
     }
 
     public int getSpeedX() {

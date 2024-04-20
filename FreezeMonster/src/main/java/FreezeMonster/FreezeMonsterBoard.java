@@ -18,8 +18,8 @@ public class FreezeMonsterBoard extends AbstractBoard {
     protected void createBadSprites() {
         // Haverão 10 inimigos em posições aleatórias espalhados pela tela
         for (int i = 0; i < 10; i++) {
-            int x = ThreadLocalRandom.current().nextInt(Commons.BOARD_WIDTH - Commons.MONSTER_WIDTH);
-            int y = ThreadLocalRandom.current().nextInt(Commons.BOARD_HEIGHT - Commons.MONSTER_HEIGHT);
+            int x = ThreadLocalRandom.current().nextInt(Commons.BOARD_WIDTH() - Commons.MONSTER_WIDTH());
+            int y = ThreadLocalRandom.current().nextInt(Commons.BOARD_HEIGHT() - Commons.MONSTER_HEIGHT());
             badSprites.add(new MonsterSprite(x, y));
         }
     }
@@ -41,15 +41,15 @@ public class FreezeMonsterBoard extends AbstractBoard {
                 case MonsterSprite monsterSprite -> {
                     var counter = monsterSprite.getCounter();
                     if (counter == 0) {
-                        int speedX = ThreadLocalRandom.current().nextInt(-Commons.MAX_SPEED, Commons.MAX_SPEED);
-                        int speedY = ThreadLocalRandom.current().nextInt(-Commons.MAX_SPEED, Commons.MAX_SPEED);
+                        int speedX = ThreadLocalRandom.current().nextInt(-Commons.MAX_SPEED(), Commons.MAX_SPEED());
+                        int speedY = ThreadLocalRandom.current().nextInt(-Commons.MAX_SPEED(), Commons.MAX_SPEED());
                         monsterSprite.setSpeedX(speedX);
                         monsterSprite.setSpeedY(speedY);
                         monsterSprite.setCounter(ThreadLocalRandom.current().nextInt(300));
                     }
 
                     // Aterar a direção do monstro para que ele não vá para fora da tela
-                    if (monsterSprite.getX() + monsterSprite.getImageWidth() > Commons.BOARD_WIDTH
+                    if (monsterSprite.getX() + monsterSprite.getImageWidth() > Commons.BOARD_WIDTH()
                             && monsterSprite.getSpeedX() > 0)
                         monsterSprite.setSpeedX(-monsterSprite.getSpeedX());
 
@@ -57,7 +57,7 @@ public class FreezeMonsterBoard extends AbstractBoard {
                             && monsterSprite.getSpeedX() < 0)
                         monsterSprite.setSpeedX(-monsterSprite.getSpeedX());
 
-                    if (monsterSprite.getY() + monsterSprite.getImageHeight() > Commons.BOARD_HEIGHT
+                    if (monsterSprite.getY() + monsterSprite.getImageHeight() > Commons.BOARD_HEIGHT()
                             && monsterSprite.getSpeedY() > 0)
                         monsterSprite.setSpeedY(-monsterSprite.getSpeedY());
 

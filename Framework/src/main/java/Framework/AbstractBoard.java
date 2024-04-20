@@ -47,10 +47,10 @@ public abstract class AbstractBoard extends JPanel {
     private void initBoard() {
         addKeyListener(new TAdapter());
         setFocusable(true);
-        d = new Dimension(Commons.BOARD_WIDTH, Commons.BOARD_HEIGHT);
+        d = new Dimension(Commons.BOARD_WIDTH(), Commons.BOARD_HEIGHT());
         setBackground(Color.black);
 
-        timer = new Timer(Commons.DELAY, new GameCycle());
+        timer = new Timer(Commons.DELAY(), new GameCycle());
         timer.start();
 
         createPlayers();
@@ -143,19 +143,19 @@ public abstract class AbstractBoard extends JPanel {
 
     private void gameOver(Graphics g) {
         g.setColor(Color.black);
-        g.fillRect(0, 0, Commons.BOARD_WIDTH, Commons.BOARD_HEIGHT);
+        g.fillRect(0, 0, Commons.BOARD_WIDTH(), Commons.BOARD_HEIGHT());
 
         g.setColor(new Color(0, 32, 48));
-        g.fillRect(50, Commons.BOARD_WIDTH / 2 - 30, Commons.BOARD_WIDTH - 100, 50);
+        g.fillRect(50, Commons.BOARD_WIDTH() / 2 - 30, Commons.BOARD_WIDTH() - 100, 50);
         g.setColor(Color.white);
-        g.drawRect(50, Commons.BOARD_WIDTH / 2 - 30, Commons.BOARD_WIDTH - 100, 50);
+        g.drawRect(50, Commons.BOARD_WIDTH() / 2 - 30, Commons.BOARD_WIDTH() - 100, 50);
 
         Font small = new Font("Helvetica", Font.BOLD, 14);
         FontMetrics fontMetrics = this.getFontMetrics(small);
 
         g.setColor(Color.white);
         g.setFont(small);
-        g.drawString(message, (Commons.BOARD_WIDTH - fontMetrics.stringWidth(message)) / 2, Commons.BOARD_WIDTH / 2);
+        g.drawString(message, (Commons.BOARD_WIDTH() - fontMetrics.stringWidth(message)) / 2, Commons.BOARD_WIDTH() / 2);
     }
 
     private void doGameCycle() {

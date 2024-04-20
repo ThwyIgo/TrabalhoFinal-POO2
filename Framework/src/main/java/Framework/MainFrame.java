@@ -11,7 +11,7 @@ public abstract class MainFrame extends JFrame  {
         add(createBoard());
 		
 		setTitle(t);
-		setSize(Commons.BOARD_WIDTH, Commons.BOARD_HEIGHT);
+		setSize(Commons.BOARD_WIDTH(), Commons.BOARD_HEIGHT());
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
