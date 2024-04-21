@@ -2,6 +2,7 @@ package FreezeMonster;
 
 import Framework.AbstractBoard;
 import Framework.sprite.BadSprite;
+import Framework.sprite.BadnessBoxSprite;
 import Framework.sprite.Player;
 import Framework.sprite.Sprite;
 
@@ -77,14 +78,13 @@ public class FreezeMonsterBoard extends AbstractBoard {
                         if (players.getFirst().isOverlapping(monstersprite) || monstersprite.isOverlapping(players.getFirst())) {
                             players.getFirst().setDying(true);
                             players.getFirst().die();
-                            System.out.println("dead");
                             break loop;
                         }
                     }
-                }
-                case Gosma gosma -> {
 
-                    if (gosma.isOverlapping(players.getFirst()) || players.getFirst().isOverlapping(gosma)) {
+                    Gosma gosma = monstersprite.getGosma();
+
+                    if (gosma.isVisible() && gosma.isOverlapping(players.getFirst()) || players.getFirst().isOverlapping(gosma)) {
                         players.getFirst().setDying(true);
                         players.getFirst().die();
                         gosma.setDestroyed(true);
