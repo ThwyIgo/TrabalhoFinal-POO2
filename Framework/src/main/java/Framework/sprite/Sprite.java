@@ -109,4 +109,14 @@ public class Sprite {
     }
 
     public enum Direction {UP, DOWN, RIGHT, LEFT}
+
+    public boolean isOverlapping(Sprite s){
+        int sx = s.getX();
+        int sy = s.getY();
+        boolean flag = x >= (sx) && x <= (sx + s.imageWidth) && y >= (sy) && y <= (sy + s.imageHeight);
+        flag = flag || (x+imageWidth) >= (sx) && (x+imageWidth) <= (sx + s.imageWidth) && y >= (sy) && y <= (sy + s.imageHeight);
+        flag = flag || x >= (sx) && x <= (sx + s.imageWidth) && (y+imageHeight) >= (sy) && (y+imageHeight) <= (sy + s.imageHeight);
+        flag = flag || (x+imageWidth) >= (sx) && (x+imageWidth) <= (sx + s.imageWidth) && (y+imageHeight) >= (sy) && (y+imageHeight) <= (sy + s.imageHeight);
+        return flag;
+    }
 }
