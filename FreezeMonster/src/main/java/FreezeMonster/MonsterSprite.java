@@ -39,10 +39,6 @@ public class MonsterSprite extends BadnessBoxSprite {
         return gosma;
     }
 
-    public void die() {
-        visible = true;
-    }
-
     public void setDying(boolean dying) {
         this.dying = dying;
         setImage(new ImageIcon(monsterImages[1][imgIdx]).getImage()
@@ -94,21 +90,21 @@ public class MonsterSprite extends BadnessBoxSprite {
         for (BadSprite foo : getBadnesses()) {
             Gosma gosma = (Gosma) foo;
 
-            if (gosma.isDestroyed() && !isDying())
+            if (!this.isDying() && gosma.isDying())
                 gosma.counter--;
 
-            if (gosma.counter == 0) {
+            if (gosma.counter <= 0) {
                 gosma.counter = ThreadLocalRandom.current().nextInt(300);
                 gosma.setX(getX());
                 gosma.setY(getY());
                 gosma.randomDir();
-                gosma.setDestroyed(false);
+                gosma.setDying(false);
                 continue;
             }
 
             if (gosma.getX() < 0 || gosma.getX() > Commons.BOARD_WIDTH()
                     || gosma.getY() < 0 || gosma.getY() > Commons.BOARD_HEIGHT()) {
-                gosma.setDestroyed(true);
+                gosma.setDying(true);
             }
 
             switch (gosma.dir) {

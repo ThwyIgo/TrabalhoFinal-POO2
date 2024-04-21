@@ -183,8 +183,8 @@ public class SpaceInvadersBoard extends AbstractBoard {
             int shot = generator.nextInt(15);
             Bomb bomb = ((BomberSprite) alien).getBomb();
 
-            if (shot == Commons.CHANCE() && alien.isVisible() && bomb.isDestroyed()) {
-                bomb.setDestroyed(false);
+            if (shot == Commons.CHANCE() && alien.isVisible() && bomb.isDying()) {
+                bomb.setDying(false);
                 bomb.setX(alien.getX());
                 bomb.setY(alien.getY());
             }
@@ -194,21 +194,21 @@ public class SpaceInvadersBoard extends AbstractBoard {
             int playerX = players.get(0).getX();
             int playerY = players.get(0).getY();
 
-            if (players.get(0).isVisible() && !bomb.isDestroyed()) {
+            if (players.get(0).isVisible() && !bomb.isDying()) {
                 if (bombX >= (playerX) && bombX <= (playerX + Commons.PLAYER_WIDTH()) && bombY >= (playerY) && bombY <= (playerY + Commons.PLAYER_HEIGHT())) {
 
                     ImageIcon ii = new ImageIcon(explImg);
                     players.get(0).setImage(ii.getImage());
                     players.get(0).setDying(true);
-                    bomb.setDestroyed(true);
+                    bomb.setDying(true);
                 }
             }
 
-            if (!bomb.isDestroyed()) {
+            if (!bomb.isDying()) {
                 bomb.setY(bomb.getY() + 1);
 
                 if (bomb.getY() >= Commons.GROUND() - Commons.BOMB_HEIGHT()) {
-                    bomb.setDestroyed(true);
+                    bomb.setDying(true);
                 }
             }
         }

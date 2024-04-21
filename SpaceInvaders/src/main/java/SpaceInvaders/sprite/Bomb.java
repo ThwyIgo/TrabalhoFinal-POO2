@@ -6,14 +6,12 @@ import javax.swing.*;
 import java.net.URL;
 
 public class Bomb extends BadSprite {
-    private boolean destroyed;
-
     public Bomb(int x, int y) {
         initBomb(x, y);
     }
 
     private void initBomb(int x, int y) {
-        setDestroyed(true);
+        setDying(true);
 
         this.x = x;
         this.y = y;
@@ -22,14 +20,5 @@ public class Bomb extends BadSprite {
         assert bombImg != null;
         ImageIcon ii = new ImageIcon(bombImg);
         setImage(ii.getImage());
-    }
-
-    @Override
-    public boolean isDestroyed() {
-        return destroyed;
-    }
-
-    public void setDestroyed(boolean destroyed) {
-        this.destroyed = destroyed;
     }
 }
