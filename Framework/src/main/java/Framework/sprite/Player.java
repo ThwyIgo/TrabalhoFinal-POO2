@@ -7,53 +7,41 @@ import java.awt.event.KeyEvent;
 import java.util.Objects;
 
 public class Player extends Sprite {
-    protected int width;
-
     public Player() {
         loadImage();
-        getImageDimensions();
         resetState();
     }
 
     protected void loadImage() {
         ImageIcon ii = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("/images/player.png")));
-        width = ii.getImage().getWidth(null);
         setImage(ii.getImage());
     }
 
-    public void act() {
-        x += dx;
-
-        if (x <= 2) {
-            x = 2;
-        }
-
-        if (x >= Commons.BOARD_WIDTH() - 2 * width) {
-            x = Commons.BOARD_WIDTH() - 2 * width;
-        }
-    }
-
     public void keyPressed(KeyEvent e) {
-        int key = e.getKeyCode();
-
-        if (key == KeyEvent.VK_LEFT) {
-            dx = -2;
-        }
-
-        if (key == KeyEvent.VK_RIGHT) {
-            dx = 2;
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_LEFT -> {
+                dx = -Commons.MAX_SPEED();
+                dir = Direction.LEFT;
+            }
+            case KeyEvent.VK_RIGHT -> {
+                dx = Commons.MAX_SPEED();
+                dir = Direction.RIGHT;
+            }
+            case KeyEvent.VK_UP -> {
+                dy = -Commons.MAX_SPEED();
+                dir = Direction.UP;
+            }
+            case KeyEvent.VK_DOWN -> {
+                dy = Commons.MAX_SPEED();
+                dir = Direction.DOWN;
+            }
         }
     }
 
     public void keyReleased(KeyEvent e) {
-        int key = e.getKeyCode();
-
-        if (key == KeyEvent.VK_LEFT) {
-            dx = 0;
-        }
-
-        if (key == KeyEvent.VK_RIGHT) {
-            dx = 0;
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT -> dx = 0;
+            case KeyEvent.VK_UP, KeyEvent.VK_DOWN -> dy = 0;
         }
     }
 

@@ -5,6 +5,7 @@ import Framework.sprite.BadSprite;
 import Framework.sprite.Player;
 import SpaceInvaders.sprite.Bomb;
 import SpaceInvaders.sprite.BomberSprite;
+import SpaceInvaders.sprite.Ship;
 import SpaceInvaders.sprite.Shot;
 
 import javax.swing.*;
@@ -20,6 +21,11 @@ public class SpaceInvadersBoard extends AbstractBoard {
     // define global control vars
     private int direction = -1;
     private int deaths = 0;
+
+    @Override
+    protected Player createPlayer() {
+        return new Ship();
+    }
 
     @Override
     protected void createBadSprites() {  // create sprites

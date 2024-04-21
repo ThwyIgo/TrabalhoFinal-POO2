@@ -1,6 +1,7 @@
 package FreezeMonster;
 
 import Framework.sprite.BadSprite;
+import Framework.sprite.Player;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,16 +9,16 @@ import java.net.URL;
 
 public class Shot extends BadSprite {
 
-    public Woody.Dir dir = Woody.Dir.UP;
+    public Player.Direction dir = Player.Direction.UP;
 
     public Shot() {
     }
 
-    public Shot(int x, int y, Woody.Dir dir) {
+    public Shot(int x, int y, Direction dir) {
         initShot(x, y, dir);
     }
 
-    private void initShot(int x, int y, Woody.Dir dir) {
+    private void initShot(int x, int y, Direction dir) {
         this.dir = dir;
         URL shotImg = this.getClass().getResource("/images/ray.png");
         assert shotImg != null;

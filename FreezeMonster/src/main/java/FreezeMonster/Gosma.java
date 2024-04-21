@@ -1,6 +1,7 @@
 package FreezeMonster;
 
 import Framework.sprite.BadSprite;
+import Framework.sprite.Player;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,11 +10,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Gosma extends BadSprite {
     protected boolean destroyed;
-    public Woody.Dir dir;
     public int counter = 0;
 
     public Gosma(int x, int y) {
-        this.dir = Woody.Dir.values()[ThreadLocalRandom.current().nextInt(Woody.Dir.values().length)];
+        this.dir = Direction.values()[ThreadLocalRandom.current().nextInt(Direction.values().length)];
         this.x = x;
         this.y = y;
 
@@ -21,8 +21,7 @@ public class Gosma extends BadSprite {
         assert sprite != null;
 
         setImage(new ImageIcon(sprite).getImage()
-                .getScaledInstance(Commons.ensureInstance().PROJECTILE_SIZE(), Commons.ensureInstance().PROJECTILE_SIZE(), Image.SCALE_SMOOTH));
-        getImageDimensions();
+                .getScaledInstance(Commons.PROJECTILE_SIZE(), Commons.PROJECTILE_SIZE(), Image.SCALE_SMOOTH));
     }
 
     @Override
@@ -35,6 +34,6 @@ public class Gosma extends BadSprite {
     }
 
     public void randomDir() {
-        this.dir = Woody.Dir.values()[ThreadLocalRandom.current().nextInt(Woody.Dir.values().length)];
+        this.dir = Player.Direction.values()[ThreadLocalRandom.current().nextInt(Player.Direction.values().length)];
     }
 }

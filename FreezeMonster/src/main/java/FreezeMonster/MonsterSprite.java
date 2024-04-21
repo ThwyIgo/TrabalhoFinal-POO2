@@ -35,8 +35,6 @@ public class MonsterSprite extends BadnessBoxSprite {
         imgIdx = ThreadLocalRandom.current().nextInt(numOfImages);
         setImage(new ImageIcon(monsterImages[0][imgIdx]).getImage()
                 .getScaledInstance(Commons.MONSTER_WIDTH(), Commons.MONSTER_HEIGHT(), Image.SCALE_SMOOTH));
-        imageWidth = Commons.MONSTER_WIDTH();
-        imageHeight = Commons.MONSTER_HEIGHT();
     }
 
     public Gosma getGosma() {
@@ -49,7 +47,8 @@ public class MonsterSprite extends BadnessBoxSprite {
 
     public void setDying(boolean dying) {
         this.dying = dying;
-        setImage(new ImageIcon(monsterImages[1][imgIdx]).getImage().getScaledInstance(Commons.MONSTER_WIDTH(), Commons.MONSTER_HEIGHT(), Image.SCALE_SMOOTH));
+        setImage(new ImageIcon(monsterImages[1][imgIdx]).getImage()
+                .getScaledInstance(Commons.MONSTER_WIDTH(), Commons.MONSTER_HEIGHT(), Image.SCALE_SMOOTH));
     }
 
     public int getSpeedX() {

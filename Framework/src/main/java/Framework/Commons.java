@@ -11,6 +11,11 @@ public class Commons {
     protected int INIT_PLAYER_X = 270;
     protected int INIT_PLAYER_Y = 280;
     protected int DELAY = 17;
+    protected int MAX_SPEED = 2;
+
+    public static int MAX_SPEED() {
+        return getInstance().MAX_SPEED;
+    }
 
     protected Commons() {
     }

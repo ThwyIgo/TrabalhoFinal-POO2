@@ -1,20 +1,40 @@
 package Framework.sprite;
 
+import Framework.Commons;
+
+import javax.swing.*;
 import java.awt.*;
 
 public class Sprite {
+    public Direction dir;
     protected Image image;
     protected int x;
     protected int y;
     protected int imageWidth;
     protected int imageHeight;
-    protected int dx;
-
+    protected int dx = 0, dy = 0;
     protected boolean visible;
     protected boolean dying;
 
     public Sprite() {
         visible = true;
+    }
+
+    public void act() {
+        x += dx;
+        y += dy;
+
+        if (x <= 0)
+            x = 0;
+
+        if (y <= 0)
+            y = 0;
+
+        if (x >= Commons.BOARD_WIDTH() - imageWidth)
+            x = Commons.BOARD_WIDTH() - imageWidth;
+
+        if (y >= Commons.BOARD_HEIGHT() - imageHeight)
+            y = Commons.BOARD_HEIGHT() - imageHeight;
     }
 
     public void die() {
@@ -35,6 +55,7 @@ public class Sprite {
 
     public void setImage(Image image) {
         this.image = image;
+        getImageDimensions();
     }
 
     public int getY() {
@@ -65,7 +86,8 @@ public class Sprite {
         return new Rectangle(x, y, image.getWidth(null), image.getHeight(null));
     }
 
-    public void getImageDimensions() {
+    private void getImageDimensions() {
+        new ImageIcon(image); // Force image to load
         imageWidth = image.getWidth(null);
         imageHeight = image.getHeight(null);
     }
@@ -85,4 +107,6 @@ public class Sprite {
     public void moveY(int direction) {
         this.y += direction;
     }
+
+    public enum Direction {UP, DOWN, RIGHT, LEFT}
 }

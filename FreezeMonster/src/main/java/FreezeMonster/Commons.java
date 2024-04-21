@@ -3,7 +3,6 @@ package FreezeMonster;
 public class Commons extends Framework.Commons {
     protected int MONSTER_WIDTH = 80;
     protected int MONSTER_HEIGHT = 80;
-    protected int MAX_SPEED = 2;
     protected int PROJECTILE_SPEED = 6;
     protected int PROJECTILE_SIZE = 30;
     protected int PLAYER_WIDTH = 100;
@@ -33,10 +32,6 @@ public class Commons extends Framework.Commons {
 
     public static int MONSTER_HEIGHT() {
         return ensureInstance().MONSTER_HEIGHT;
-    }
-
-    public static int MAX_SPEED() {
-        return ensureInstance().MAX_SPEED;
     }
 
     public static int NUMBER_OF_MONSTERS_TO_DESTROY() {

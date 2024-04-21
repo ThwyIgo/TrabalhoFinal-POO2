@@ -10,7 +10,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class FreezeMonsterBoard extends AbstractBoard {
     // define global control vars
-    private final int direction = -1;
     //define sprites
     private Shot shot;
     private int deaths = 0;
@@ -181,7 +180,7 @@ public class FreezeMonsterBoard extends AbstractBoard {
         if (key == KeyEvent.VK_SPACE) {
             if (inGame) {
                 if (!shot.isVisible()) {
-                    shot = new Shot(x, y, ((Woody) player).dir);
+                    shot = new Shot(x, y, player.dir);
                 }
             }
         }
