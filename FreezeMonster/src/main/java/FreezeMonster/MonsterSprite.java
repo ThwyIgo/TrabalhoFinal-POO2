@@ -21,8 +21,6 @@ public class MonsterSprite extends BadnessBoxSprite {
     }
 
     protected int imgIdx;
-    protected int speedX = 0;
-    protected int speedY = 0;
     protected int counter = 0;
     private final Gosma gosma;
 
@@ -51,28 +49,75 @@ public class MonsterSprite extends BadnessBoxSprite {
                 .getScaledInstance(Commons.MONSTER_WIDTH(), Commons.MONSTER_HEIGHT(), Image.SCALE_SMOOTH));
     }
 
-    public int getSpeedX() {
-        return speedX;
-    }
-
-    public void setSpeedX(int speedX) {
-        this.speedX = speedX;
-    }
-
-    public int getSpeedY() {
-        return speedY;
-    }
-
-    public void setSpeedY(int speedY) {
-        this.speedY = speedY;
-    }
-
     public int getCounter() {
         return counter;
     }
 
     public void setCounter(int counter) {
         this.counter = counter;
+    }
+
+    @Override
+    public void act() {
+        if (!isDying()) {
+            var counter = getCounter();
+            if (counter == 0) {
+                int speedX = ThreadLocalRandom.current().nextInt(-Commons.MAX_SPEED(), Commons.MAX_SPEED());
+                int speedY = ThreadLocalRandom.current().nextInt(-Commons.MAX_SPEED(), Commons.MAX_SPEED());
+                dx = speedX;
+                dy = speedY;
+                setCounter(ThreadLocalRandom.current().nextInt(300));
+            }
+
+            // Aterar a direção do monstro para que ele não vá para fora da tela
+            if (getX() + getImageWidth() > Commons.BOARD_WIDTH()
+                    && dx > 0)
+                dx = -dx;
+
+            if (getX() < 0 && dx < 0)
+                dx = -dx;
+
+            if (getY() + getImageHeight() > Commons.BOARD_HEIGHT()
+                    && dy > 0)
+                dy = -dy;
+
+            if (getY() < 0
+                    && dy < 0)
+                dy = -dy;
+
+            setCounter(getCounter() - 1);
+            moveX(dx);
+            moveY(dy);
+        }
+
+        // Processar gosmas
+        for (BadSprite foo : getBadnesses()) {
+            Gosma gosma = (Gosma) foo;
+
+            if (gosma.isDestroyed() && !isDying())
+                gosma.counter--;
+
+            if (gosma.counter == 0) {
+                gosma.counter = ThreadLocalRandom.current().nextInt(300);
+                gosma.setX(getX());
+                gosma.setY(getY());
+                gosma.randomDir();
+                gosma.setDestroyed(false);
+                continue;
+            }
+
+            if (gosma.getX() < 0 || gosma.getX() > Commons.BOARD_WIDTH()
+                    || gosma.getY() < 0 || gosma.getY() > Commons.BOARD_HEIGHT()) {
+                gosma.setDestroyed(true);
+            }
+
+            switch (gosma.dir) {
+                case UP -> gosma.moveY(-Commons.PROJECTILE_SPEED());
+                case DOWN -> gosma.moveY(Commons.PROJECTILE_SPEED());
+                case LEFT -> gosma.moveX(-Commons.PROJECTILE_SPEED());
+                case RIGHT -> gosma.moveX(Commons.PROJECTILE_SPEED());
+            }
+        }
     }
 
     @Override
