@@ -123,7 +123,7 @@ public class SpaceInvadersBoard extends AbstractBoard {
                         alien.setImage(ii.getImage());
                         alien.setDying(true);
                         deaths++;
-                        shot.die();
+                        shot.setDying(true);
                     }
                 }
             }
@@ -132,7 +132,7 @@ public class SpaceInvadersBoard extends AbstractBoard {
             y -= 4;
 
             if (y < 0) {
-                shot.die();
+                shot.setDying(true);
             } else {
                 shot.setY(y);
             }

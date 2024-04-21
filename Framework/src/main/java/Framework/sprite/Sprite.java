@@ -10,8 +10,8 @@ public class Sprite {
     protected Image image;
     protected int x;
     protected int y;
-    protected int imageWidth;
-    protected int imageHeight;
+    private int imageWidth;
+    private int imageHeight;
     protected int dx = 0, dy = 0;
     protected boolean visible;
     protected boolean dying;
@@ -35,10 +35,6 @@ public class Sprite {
 
         if (y >= Commons.BOARD_HEIGHT() - imageHeight)
             y = Commons.BOARD_HEIGHT() - imageHeight;
-    }
-
-    public void die() {
-        visible = false;
     }
 
     public boolean isVisible() {
@@ -98,6 +94,7 @@ public class Sprite {
 
     public void setDying(boolean dying) {
         this.dying = dying;
+        this.visible = !dying;
     }
 
     public void moveX(int direction) {

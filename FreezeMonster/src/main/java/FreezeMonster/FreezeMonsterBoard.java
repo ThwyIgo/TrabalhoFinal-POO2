@@ -68,14 +68,12 @@ public class FreezeMonsterBoard extends AbstractBoard {
             for (BadSprite badSprite : badSprites) {
                 switch (badSprite) {
                     case MonsterSprite monstersprite -> {
-                        int monsterX = badSprite.getX();
-                        int monsterY = badSprite.getY();
-
                         if (monstersprite.isVisible() && shot.isVisible()) {
-                            if (shotX >= (monsterX) && shotX <= (monsterX + Commons.MONSTER_WIDTH()) && shotY >= (monsterY) && shotY <= (monsterY + Commons.MONSTER_HEIGHT())) {
+                            if (shotX >= badSprite.getX() && shotX <= badSprite.getX() + badSprite.getImageWidth()
+                                    && shotY >= badSprite.getY() && shotY <= badSprite.getY() + badSprite.getImageHeight()) {
                                 monstersprite.setDying(true);
                                 deaths++;
-                                shot.die();
+                                shot.setDying(true);
                             }
                         }
                     }
@@ -93,7 +91,7 @@ public class FreezeMonsterBoard extends AbstractBoard {
             }
 
             if (y < 0 || y > Commons.BOARD_HEIGHT() || x < 0 || x > Commons.BOARD_WIDTH()) {
-                shot.die();
+                shot.setDying(true);
             }
         }
 

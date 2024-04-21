@@ -80,9 +80,6 @@ public abstract class AbstractBoard extends JPanel {
             if (bad.isVisible()) {
                 g.drawImage(bad.getImage(), bad.getX(), bad.getY(), this);
             }
-            if (bad.isDying()) {
-                bad.die();
-            }
 
             if (bad.getBadnesses() != null) {
                 for (BadSprite badness : bad.getBadnesses()) {
@@ -101,7 +98,6 @@ public abstract class AbstractBoard extends JPanel {
             }
 
             if (player.isDying()) {
-                player.die();
                 inGame = false;
             }
         }
