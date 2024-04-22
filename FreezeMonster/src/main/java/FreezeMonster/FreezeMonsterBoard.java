@@ -11,8 +11,6 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
 
 public class FreezeMonsterBoard extends AbstractBoard {
-    // define global control vars
-    //define sprites
     private Shot shot;
     private int deaths = 0;
 
@@ -28,8 +26,7 @@ public class FreezeMonsterBoard extends AbstractBoard {
 
     @Override
     protected void createBadSprites() {
-        // Haverão 10 inimigos em posições aleatórias espalhados pela tela
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < Commons.NUMBER_OF_MONSTERS_TO_DESTROY(); i++) {
             int x = ThreadLocalRandom.current().nextInt(Commons.BOARD_WIDTH() - Commons.MONSTER_WIDTH());
             int y = ThreadLocalRandom.current().nextInt(Commons.BOARD_HEIGHT() - Commons.MONSTER_HEIGHT());
             badSprites.add(new MonsterSprite(x, y));
@@ -68,7 +65,7 @@ public class FreezeMonsterBoard extends AbstractBoard {
             for (BadSprite badSprite : badSprites) {
                 switch (badSprite) {
                     case MonsterSprite monstersprite -> {
-                        if (monstersprite.isVisible() && shot.isVisible()) {
+                        if (!monstersprite.isDying() && !shot.isDying()) {
                             if (shotX >= badSprite.getX() && shotX <= badSprite.getX() + badSprite.getImageWidth()
                                     && shotY >= badSprite.getY() && shotY <= badSprite.getY() + badSprite.getImageHeight()) {
                                 monstersprite.setDying(true);

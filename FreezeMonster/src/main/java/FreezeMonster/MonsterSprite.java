@@ -1,15 +1,13 @@
 package FreezeMonster;
 
 import Framework.sprite.BadSprite;
-import Framework.sprite.BadnessBoxSprite;
 
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
-import java.util.LinkedList;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class MonsterSprite extends BadnessBoxSprite {
+public class MonsterSprite extends BadSprite {
     protected static final int numOfImages = 9;
     protected static final URL[][] monsterImages = new URL[2][numOfImages];
 
@@ -29,14 +27,11 @@ public class MonsterSprite extends BadnessBoxSprite {
         this.x = x;
         this.y = y;
         gosma = new Gosma(x, y);
+        badnesses.add(gosma);
 
         imgIdx = ThreadLocalRandom.current().nextInt(numOfImages);
         setImage(new ImageIcon(monsterImages[0][imgIdx]).getImage()
                 .getScaledInstance(Commons.MONSTER_WIDTH(), Commons.MONSTER_HEIGHT(), Image.SCALE_SMOOTH));
-    }
-
-    public Gosma getGosma() {
-        return gosma;
     }
 
     public void setDying(boolean dying) {
@@ -114,12 +109,5 @@ public class MonsterSprite extends BadnessBoxSprite {
                 case RIGHT -> gosma.moveX(Commons.PROJECTILE_SPEED());
             }
         }
-    }
-
-    @Override
-    public LinkedList<BadSprite> getBadnesses() {
-        LinkedList<BadSprite> aBomb = new LinkedList<>();
-        aBomb.add(gosma);
-        return aBomb;
     }
 }

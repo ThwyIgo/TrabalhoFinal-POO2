@@ -1,7 +1,6 @@
 package FreezeMonster;
 
 import Framework.sprite.BadSprite;
-import Framework.sprite.Player;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,12 +8,13 @@ import java.net.URL;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Gosma extends BadSprite {
+    // Atraso antes da gosma ser disparada novamente
     public int counter = 0;
 
     public Gosma(int x, int y) {
-        this.dir = Direction.values()[ThreadLocalRandom.current().nextInt(Direction.values().length)];
         this.x = x;
         this.y = y;
+        randomDir();
 
         URL sprite = this.getClass().getResource("/images/gosma.png");
         assert sprite != null;
@@ -24,6 +24,6 @@ public class Gosma extends BadSprite {
     }
 
     public void randomDir() {
-        this.dir = Player.Direction.values()[ThreadLocalRandom.current().nextInt(Player.Direction.values().length)];
+        this.dir = Direction.values()[ThreadLocalRandom.current().nextInt(Direction.values().length)];
     }
 }

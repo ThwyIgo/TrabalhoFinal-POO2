@@ -1,13 +1,11 @@
 package SpaceInvaders.sprite;
 
 import Framework.sprite.BadSprite;
-import Framework.sprite.BadnessBoxSprite;
 
 import javax.swing.*;
 import java.net.URL;
-import java.util.LinkedList;
 
-public class BomberSprite extends BadnessBoxSprite {
+public class BomberSprite extends BadSprite {
     private Bomb bomb;
 
     public BomberSprite(int x, int y) {
@@ -19,6 +17,7 @@ public class BomberSprite extends BadnessBoxSprite {
         this.y = y;
 
         bomb = new Bomb(x, y);
+        badnesses.add(bomb);
 
         URL alienImg = this.getClass().getResource("/images/alien.png");
         assert alienImg != null;
@@ -29,12 +28,5 @@ public class BomberSprite extends BadnessBoxSprite {
 
     public Bomb getBomb() {
         return bomb;
-    }
-
-    @Override
-    public LinkedList<BadSprite> getBadnesses() {
-        LinkedList<BadSprite> aBomb = new LinkedList<>();
-        aBomb.add(bomb);
-        return aBomb;
     }
 }
