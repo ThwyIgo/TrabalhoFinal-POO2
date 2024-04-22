@@ -4,6 +4,7 @@ import Framework.AbstractBoard;
 import Framework.sprite.BadSprite;
 import Framework.sprite.Player;
 import Framework.sprite.Sprite;
+import FreezeMonster.fabricas.WoodyFabrica;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -15,13 +16,8 @@ public class FreezeMonsterBoard extends AbstractBoard {
     private int deaths = 0;
 
     public FreezeMonsterBoard() {
-        super();
+        super(new WoodyFabrica());
         setBackground(new Color(100, 200, 100));
-    }
-
-    @Override
-    protected Player createPlayer() {
-        return new Woody();
     }
 
     @Override
@@ -57,37 +53,32 @@ public class FreezeMonsterBoard extends AbstractBoard {
             message = "Game won!";
         }
 
-        loop:
         for (BadSprite badSprite : badSprites) {
-            switch (badSprite) {
-                case MonsterSprite monstersprite -> {
-                    if (!monstersprite.isDying() && !shot.isDying()) {
-                        if (shot.isOverlapping(monstersprite) || monstersprite.isOverlapping(shot)) {
-                            monstersprite.setDying(true);
-                            deaths++;
-                            shot.setDying(true);
-                        }
-                    }
 
-
-                    if (monstersprite.isVisible() && !monstersprite.isDying()) {
-                        if (players.getFirst().isOverlapping(monstersprite) || monstersprite.isOverlapping(players.getFirst())) {
-                            players.getFirst().setDying(true);
-                            break loop;
-                        }
-                    }
-
-                    Gosma gosma = monstersprite.getGosma();
-
-                    if (gosma.isVisible() && gosma.isOverlapping(players.getFirst()) || players.getFirst().isOverlapping(gosma)) {
-                        players.getFirst().setDying(true);
-                        gosma.setDying(true);
-                        System.out.println("dead");
-                        break loop;
-                    }
+            if (!badSprite.isDying() && !shot.isDying()) {
+                if (shot.isOverlapping(badSprite) || badSprite.isOverlapping(shot)) {
+                    badSprite.setDying(true);
+                    deaths++;
+                    shot.setDying(true);
                 }
-                default -> throw new IllegalStateException("Unexpected badSprite: " + badSprite);
             }
+
+
+            if (badSprite.isVisible() && !badSprite.isDying()) {
+                if (players.getFirst().isOverlapping(badSprite) || badSprite.isOverlapping(players.getFirst())) {
+                    players.getFirst().setDying(true);
+                    break;
+                }
+            }
+
+            BadSprite gosma = badSprite.getBadnesses().getFirst();
+
+            if (gosma.isVisible() && gosma.isOverlapping(players.getFirst()) || players.getFirst().isOverlapping(gosma)) {
+                players.getFirst().setDying(true);
+                gosma.setDying(true);
+                break;
+            }
+
         }
 
         int y = shot.getY();

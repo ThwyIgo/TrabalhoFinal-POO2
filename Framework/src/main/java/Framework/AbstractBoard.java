@@ -1,5 +1,6 @@
 package Framework;
 
+import Framework.fabricas.PlayerFabrica;
 import Framework.sprite.BadSprite;
 import Framework.sprite.Player;
 
@@ -17,6 +18,8 @@ public abstract class AbstractBoard extends JPanel {
 
     //define sprites
     protected LinkedList<Player> players;
+
+    protected PlayerFabrica pf;
     protected LinkedList<BadSprite> badSprites;
 
     protected boolean inGame = true;
@@ -24,7 +27,8 @@ public abstract class AbstractBoard extends JPanel {
     protected Timer timer;
     private int numberPlayers;  // to do - future use
 
-    public AbstractBoard() {
+    public AbstractBoard(PlayerFabrica p) {
+        pf = p;
         initBoard();
         createPlayers();
         numberPlayers = 1;
@@ -62,11 +66,7 @@ public abstract class AbstractBoard extends JPanel {
 
     protected void createPlayers() {
         players = new LinkedList<>();
-        players.add(createPlayer());
-    }
-
-    protected Player createPlayer() {
-        return new Player();
+        players.add(pf.novoPlayer());
     }
 
     public Player getPlayer(int i) {

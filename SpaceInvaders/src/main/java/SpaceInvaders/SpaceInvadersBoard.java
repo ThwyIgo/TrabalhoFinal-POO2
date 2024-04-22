@@ -3,6 +3,7 @@ package SpaceInvaders;
 import Framework.AbstractBoard;
 import Framework.sprite.BadSprite;
 import Framework.sprite.Player;
+import SpaceInvaders.fabricas.ShipFabrica;
 import SpaceInvaders.sprite.Bomb;
 import SpaceInvaders.sprite.BomberSprite;
 import SpaceInvaders.sprite.Ship;
@@ -22,9 +23,8 @@ public class SpaceInvadersBoard extends AbstractBoard {
     private int direction = -1;
     private int deaths = 0;
 
-    @Override
-    protected Player createPlayer() {
-        return new Ship();
+    public SpaceInvadersBoard(){
+        super(new ShipFabrica());
     }
 
     @Override
