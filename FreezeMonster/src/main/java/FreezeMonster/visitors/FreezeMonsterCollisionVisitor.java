@@ -8,7 +8,7 @@ import FreezeMonster.MonsterSprite;
 import FreezeMonster.Shot;
 
 public class FreezeMonsterCollisionVisitor extends CollisionVistor {
-    public static boolean trataColisao(Player p, BadSprite ms){
+    public static boolean trataColisao(Player p, BadSprite ms){ //colisão entre monstro e player
         if (ms.isVisible() && !ms.isDying()) {
             if (mutualOverlapping(ms,p)) {
                 p.setDying(true);
@@ -18,7 +18,7 @@ public class FreezeMonsterCollisionVisitor extends CollisionVistor {
         return false;
     }
 
-    public static boolean trataColisao(Player p, Gosma gosma){
+    public static boolean trataColisao(Player p, Gosma gosma){ //colisão entre player e tiro do monstro
         if (!gosma.isDying() && mutualOverlapping(p,gosma)) {
             p.setDying(true);
             gosma.setDying(true);
@@ -27,7 +27,7 @@ public class FreezeMonsterCollisionVisitor extends CollisionVistor {
         return false;
     }
 
-    public static boolean trataColisao(BadSprite ms, Shot s){
+    public static boolean trataColisao(BadSprite ms, Shot s){ //colisão entre monstro e tiro do player
         if (!ms.isDying() && !s.isDying()) {
             if (mutualOverlapping(ms,s)) {
                 ms.setDying(true);
