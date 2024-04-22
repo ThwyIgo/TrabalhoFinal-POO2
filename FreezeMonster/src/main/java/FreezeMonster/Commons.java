@@ -7,7 +7,7 @@ public class Commons extends Framework.Commons {
     protected int PROJECTILE_SIZE = 30;
     protected int PLAYER_WIDTH = 100;
     protected int PLAYER_HEIGHT = 50;
-    protected int NUMBER_OF_MONSTERS_TO_DESTROY = 10;
+    protected int NUMBER_OF_MONSTERS_TO_DESTROY = 1;
     protected Commons() {
         BOARD_WIDTH = 1280;
         BOARD_HEIGHT = 720;

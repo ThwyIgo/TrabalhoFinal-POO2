@@ -5,6 +5,7 @@ import Framework.sprite.BadSprite;
 import Framework.sprite.Player;
 import Framework.sprite.Sprite;
 import FreezeMonster.fabricas.WoodyFabrica;
+import FreezeMonster.visitors.FreezeMonsterCollisionVisitor;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -55,27 +56,12 @@ public class FreezeMonsterBoard extends AbstractBoard {
 
         for (BadSprite badSprite : badSprites) {
 
-            if (!badSprite.isDying() && !shot.isDying()) {
-                if (shot.isOverlapping(badSprite) || badSprite.isOverlapping(shot)) {
-                    badSprite.setDying(true);
-                    deaths++;
-                    shot.setDying(true);
-                }
+            if (FreezeMonsterCollisionVisitor.trataColisao(badSprite,shot)) {
+                deaths++;
             }
 
-
-            if (badSprite.isVisible() && !badSprite.isDying()) {
-                if (players.getFirst().isOverlapping(badSprite) || badSprite.isOverlapping(players.getFirst())) {
-                    players.getFirst().setDying(true);
-                    break;
-                }
-            }
-
-            BadSprite gosma = badSprite.getBadnesses().getFirst();
-
-            if (gosma.isVisible() && gosma.isOverlapping(players.getFirst()) || players.getFirst().isOverlapping(gosma)) {
-                players.getFirst().setDying(true);
-                gosma.setDying(true);
+            if(FreezeMonsterCollisionVisitor.trataColisao(players.getFirst(),badSprite) ||
+                    FreezeMonsterCollisionVisitor.trataColisao(players.getFirst(),badSprite.getBadnesses().getFirst())){
                 break;
             }
 
