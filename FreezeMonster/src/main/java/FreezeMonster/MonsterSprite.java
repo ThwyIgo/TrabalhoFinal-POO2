@@ -110,4 +110,8 @@ public class MonsterSprite extends BadSprite {
             }
         }
     }
+
+    public Gosma getGosma() {
+        return gosma;
+    }
 }

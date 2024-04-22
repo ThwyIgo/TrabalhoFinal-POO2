@@ -57,43 +57,53 @@ public class FreezeMonsterBoard extends AbstractBoard {
             message = "Game won!";
         }
 
-        // shot collision
-        if (shot.isVisible()) {
-            int shotX = shot.getX();
-            int shotY = shot.getY();
-
-            for (BadSprite badSprite : badSprites) {
-                switch (badSprite) {
-                    case MonsterSprite monstersprite -> {
-                        if (!monstersprite.isDying() && !shot.isDying()) {
-                            if (shotX >= badSprite.getX() && shotX <= badSprite.getX() + badSprite.getImageWidth()
-                                    && shotY >= badSprite.getY() && shotY <= badSprite.getY() + badSprite.getImageHeight()) {
-                                monstersprite.setDying(true);
-                                deaths++;
-                                shot.setDying(true);
-                            }
+        loop:
+        for (BadSprite badSprite : badSprites) {
+            switch (badSprite) {
+                case MonsterSprite monstersprite -> {
+                    if (!monstersprite.isDying() && !shot.isDying()) {
+                        if (shot.isOverlapping(monstersprite) || monstersprite.isOverlapping(shot)) {
+                            monstersprite.setDying(true);
+                            deaths++;
+                            shot.setDying(true);
                         }
                     }
-                    default -> throw new IllegalStateException("Unexpected badSprite: " + badSprite);
+
+
+                    if (monstersprite.isVisible() && !monstersprite.isDying()) {
+                        if (players.getFirst().isOverlapping(monstersprite) || monstersprite.isOverlapping(players.getFirst())) {
+                            players.getFirst().setDying(true);
+                            break loop;
+                        }
+                    }
+
+                    Gosma gosma = monstersprite.getGosma();
+
+                    if (gosma.isVisible() && gosma.isOverlapping(players.getFirst()) || players.getFirst().isOverlapping(gosma)) {
+                        players.getFirst().setDying(true);
+                        gosma.setDying(true);
+                        System.out.println("dead");
+                        break loop;
+                    }
                 }
-            }
-
-            int y = shot.getY();
-            int x = shot.getX();
-            switch (shot.dir) {
-                case UP -> shot.setY(y - Commons.PROJECTILE_SPEED());
-                case DOWN -> shot.setY(y + Commons.PROJECTILE_SPEED());
-                case RIGHT -> shot.setX(x + Commons.PROJECTILE_SPEED());
-                case LEFT -> shot.setX(x - Commons.PROJECTILE_SPEED());
-            }
-
-            if (y < 0 || y > Commons.BOARD_HEIGHT() || x < 0 || x > Commons.BOARD_WIDTH()) {
-                shot.setDying(true);
+                default -> throw new IllegalStateException("Unexpected badSprite: " + badSprite);
             }
         }
 
-        Stream.concat(players.stream(), badSprites.stream())
-                .forEach(Sprite::act);
+        int y = shot.getY();
+        int x = shot.getX();
+        switch (shot.dir) {
+            case UP -> shot.setY(y - Commons.PROJECTILE_SPEED());
+            case DOWN -> shot.setY(y + Commons.PROJECTILE_SPEED());
+            case RIGHT -> shot.setX(x + Commons.PROJECTILE_SPEED());
+            case LEFT -> shot.setX(x - Commons.PROJECTILE_SPEED());
+        }
+
+        if (y < 0 || y > Commons.BOARD_HEIGHT() || x < 0 || x > Commons.BOARD_WIDTH()) {
+            shot.setDying(true);
+        }
+
+        Stream.concat(players.stream(), badSprites.stream()).forEach(Sprite::act);
     }
 
     @Override
