@@ -18,14 +18,22 @@ public class FreezeMonsterBoard extends AbstractBoard {
 
     public FreezeMonsterBoard() {
         super(new WoodyFabrica());
-        setBackground(new Color(100, 200, 100));
     }
 
     @Override
     protected void createBadSprites() {
         for (int i = 0; i < Commons.NUMBER_OF_MONSTERS_TO_DESTROY(); i++) {
-            int x = ThreadLocalRandom.current().nextInt(Commons.BOARD_WIDTH() - Commons.MONSTER_WIDTH());
-            int y = ThreadLocalRandom.current().nextInt(Commons.BOARD_HEIGHT() - Commons.MONSTER_HEIGHT());
+            int x, y, padding = 20;
+            // Evitar que monstros apareçam na mesma posição que o Player
+            if (ThreadLocalRandom.current().nextBoolean()) {
+                x = ThreadLocalRandom.current().nextInt(Commons.INIT_PLAYER_X() - Commons.MONSTER_WIDTH() - padding);
+                y = ThreadLocalRandom.current().nextInt(Commons.INIT_PLAYER_Y() - Commons.MONSTER_HEIGHT() - padding);
+            } else {
+                x = ThreadLocalRandom.current().nextInt(Commons.INIT_PLAYER_X() + Commons.PLAYER_WIDTH() + padding,
+                        Commons.BOARD_WIDTH() - Commons.MONSTER_WIDTH());
+                y = ThreadLocalRandom.current().nextInt(Commons.INIT_PLAYER_Y() - Commons.PLAYER_HEIGHT() + padding,
+                        Commons.BOARD_HEIGHT() - Commons.MONSTER_HEIGHT());
+            }
             badSprites.add(new MonsterSprite(x, y));
         }
     }

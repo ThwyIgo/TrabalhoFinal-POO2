@@ -1,5 +1,7 @@
 package FreezeMonster;
 
+import java.awt.*;
+
 public class Commons extends Framework.Commons {
     protected int MONSTER_WIDTH = 80;
     protected int MONSTER_HEIGHT = 80;
@@ -7,10 +9,14 @@ public class Commons extends Framework.Commons {
     protected int PROJECTILE_SIZE = 30;
     protected int PLAYER_WIDTH = 100;
     protected int PLAYER_HEIGHT = 50;
-    protected int NUMBER_OF_MONSTERS_TO_DESTROY = 5;
+    protected int NUMBER_OF_MONSTERS_TO_DESTROY = 10;
+
     protected Commons() {
         BOARD_WIDTH = 1280;
         BOARD_HEIGHT = 720;
+        BG_COLOR = new Color(100, 200, 100);
+        INIT_PLAYER_X = BOARD_WIDTH / 2 - PLAYER_WIDTH / 2;
+        INIT_PLAYER_Y = BOARD_HEIGHT / 2 - PLAYER_HEIGHT / 2;
     }
 
     public static int PROJECTILE_SPEED() {

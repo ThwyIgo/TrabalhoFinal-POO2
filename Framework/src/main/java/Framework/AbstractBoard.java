@@ -35,6 +35,7 @@ public abstract class AbstractBoard extends JPanel {
         badSprites = new LinkedList<>();
         createBadSprites();
         createOtherSprites();
+        setBackground(Commons.BG_COLOR());
     }
 
     // HotSpots
@@ -133,7 +134,7 @@ public abstract class AbstractBoard extends JPanel {
     }
 
     private void gameOver(Graphics g) {
-        g.setColor(Color.black);
+        g.setColor(Commons.BG_COLOR());
         g.fillRect(0, 0, Commons.BOARD_WIDTH(), Commons.BOARD_HEIGHT());
 
         g.setColor(new Color(0, 32, 48));

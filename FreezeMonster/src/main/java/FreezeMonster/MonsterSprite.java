@@ -28,6 +28,9 @@ public class MonsterSprite extends BadSprite {
         this.y = y;
         gosma = new Gosma(x, y);
         badnesses.add(gosma);
+        // Delay antes das gosmas começarem a ser atiradas
+        gosma.counter = ThreadLocalRandom.current().nextInt(50, 200);
+        gosma.setDying(true);
 
         imgIdx = ThreadLocalRandom.current().nextInt(numOfImages);
         setImage(new ImageIcon(monsterImages[0][imgIdx]).getImage()
@@ -109,9 +112,5 @@ public class MonsterSprite extends BadSprite {
                 case RIGHT -> gosma.moveX(Commons.PROJECTILE_SPEED());
             }
         }
-    }
-
-    public Gosma getGosma() {
-        return gosma;
     }
 }

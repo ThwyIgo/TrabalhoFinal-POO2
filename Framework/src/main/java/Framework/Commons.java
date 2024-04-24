@@ -1,5 +1,7 @@
 package Framework;
 
+import java.awt.*;
+
 public class Commons {
     private static Commons instance;
 
@@ -12,12 +14,17 @@ public class Commons {
     protected int INIT_PLAYER_Y = 280;
     protected int DELAY = 17;
     protected int MAX_SPEED = 2;
+    protected Color BG_COLOR = Color.black;
+
+    protected Commons() {
+    }
+
+    public static Color BG_COLOR() {
+        return getInstance().BG_COLOR;
+    }
 
     public static int MAX_SPEED() {
         return getInstance().MAX_SPEED;
-    }
-
-    protected Commons() {
     }
 
     protected static Commons getInstance() {

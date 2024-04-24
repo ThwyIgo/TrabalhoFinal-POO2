@@ -9,7 +9,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Gosma extends BadSprite {
     // Atraso antes da gosma ser disparada novamente
-    public int counter = 0;
+    public int counter;
 
     public Gosma(int x, int y) {
         this.x = x;
