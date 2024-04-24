@@ -2,20 +2,15 @@ package Framework.sprite;
 
 import Framework.Commons;
 
-import javax.swing.*;
 import java.awt.event.KeyEvent;
-import java.util.Objects;
 
-public class Player extends Sprite {
+public abstract class Player extends Sprite {
     public Player() {
         loadImage();
         resetState();
     }
 
-    protected void loadImage() {
-        ImageIcon ii = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("/images/player.png")));
-        setImage(ii.getImage());
-    }
+    protected abstract void loadImage();
 
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {

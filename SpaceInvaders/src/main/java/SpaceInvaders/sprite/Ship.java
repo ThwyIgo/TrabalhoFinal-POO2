@@ -2,9 +2,19 @@ package SpaceInvaders.sprite;
 
 import SpaceInvaders.Commons;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Objects;
 
 public class Ship extends Framework.sprite.Player {
+    @Override
+    protected void loadImage() {
+        Image ii = new ImageIcon(Objects.requireNonNull(this.getClass()
+                .getResource("/images/player.png"))).getImage();
+        setImage(ii);
+    }
+
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
