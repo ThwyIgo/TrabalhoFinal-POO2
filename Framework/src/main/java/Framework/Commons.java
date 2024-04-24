@@ -27,7 +27,7 @@ public class Commons {
         return getInstance().MAX_SPEED;
     }
 
-    protected static Commons getInstance() {
+    public static Commons getInstance() {
         if (instance == null)
             setInstance(new Commons());
         return instance;
