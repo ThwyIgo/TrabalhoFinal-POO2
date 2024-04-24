@@ -6,10 +6,9 @@ import Framework.sprite.Player;
 import SpaceInvaders.fabricas.ShipFabrica;
 import SpaceInvaders.sprite.Bomb;
 import SpaceInvaders.sprite.BomberSprite;
-import SpaceInvaders.sprite.Ship;
 import SpaceInvaders.sprite.Shot;
+import SpaceInvaders.visitors.SpaceInvadersCollisionVisitor;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.net.URL;
@@ -23,7 +22,7 @@ public class SpaceInvadersBoard extends AbstractBoard {
     private int direction = -1;
     private int deaths = 0;
 
-    public SpaceInvadersBoard(){
+    public SpaceInvadersBoard() {
         super(new ShipFabrica());
     }
 
@@ -109,23 +108,9 @@ public class SpaceInvadersBoard extends AbstractBoard {
 
         // shot
         if (shot.isVisible()) {
-            int shotX = shot.getX();
-            int shotY = shot.getY();
-
             for (BadSprite alien : badSprites) {
-                int alienX = alien.getX();
-                int alienY = alien.getY();
-
-                if (alien.isVisible() && shot.isVisible()) {
-                    if (shotX >= (alienX) && shotX <= (alienX + Commons.ALIEN_WIDTH()) && shotY >= (alienY) && shotY <= (alienY + Commons.ALIEN_HEIGHT())) {
-
-                        ImageIcon ii = new ImageIcon(explImg);
-                        alien.setImage(ii.getImage());
-                        alien.setDying(true);
-                        deaths++;
-                        shot.setDying(true);
-                    }
-                }
+                if (SpaceInvadersCollisionVisitor.trataColisao(shot, alien, explImg))
+                    deaths++;
             }
 
             int y = shot.getY();
@@ -189,20 +174,7 @@ public class SpaceInvadersBoard extends AbstractBoard {
                 bomb.setY(alien.getY());
             }
 
-            int bombX = bomb.getX();
-            int bombY = bomb.getY();
-            int playerX = players.get(0).getX();
-            int playerY = players.get(0).getY();
-
-            if (players.get(0).isVisible() && !bomb.isDying()) {
-                if (bombX >= (playerX) && bombX <= (playerX + Commons.PLAYER_WIDTH()) && bombY >= (playerY) && bombY <= (playerY + Commons.PLAYER_HEIGHT())) {
-
-                    ImageIcon ii = new ImageIcon(explImg);
-                    players.get(0).setImage(ii.getImage());
-                    players.get(0).setDying(true);
-                    bomb.setDying(true);
-                }
-            }
+            SpaceInvadersCollisionVisitor.trataColisao(players.getFirst(), bomb, explImg);
 
             if (!bomb.isDying()) {
                 bomb.setY(bomb.getY() + 1);
