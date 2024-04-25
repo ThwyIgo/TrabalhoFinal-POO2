@@ -63,16 +63,17 @@ public class FreezeMonsterBoard extends AbstractBoard {
         }
 
         for (BadSprite badSprite : badSprites) {
-
             if (FreezeMonsterCollisionVisitor.trataColisao(badSprite,shot)) {
                 deaths++;
             }
 
-            if(FreezeMonsterCollisionVisitor.trataColisao(players.getFirst(),badSprite) ||
-                    FreezeMonsterCollisionVisitor.trataColisao(players.getFirst(),badSprite.getBadnesses().getFirst())){
+            if(FreezeMonsterCollisionVisitor.trataColisao(players.getFirst(), badSprite) ||
+                    FreezeMonsterCollisionVisitor.trataColisao(players.getFirst(), badSprite.getBadnesses().getFirst())){
                 break;
             }
 
+            badSprite.getBadnesses().forEach(badness ->
+                FreezeMonsterCollisionVisitor.trataColisao(badness, shot));
         }
 
         int y = shot.getY();
@@ -93,8 +94,8 @@ public class FreezeMonsterBoard extends AbstractBoard {
 
     @Override
     protected void processOtherSprites(Player player, KeyEvent e) {
-        int x = player.getX();
-        int y = player.getY();
+        int x = player.getX() + player.getImageWidth() / 2 - shot.getImageWidth() / 2 ;
+        int y = player.getY() + player.getImageHeight() / 2 - shot.getImageHeight() / 2;
 
         int key = e.getKeyCode();
 
